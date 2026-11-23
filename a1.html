@@ -2412,7 +2412,7 @@ function calcKeyFor(e){
 
 /* ---------- Servidor externo (Google Apps Script) ---------- */
 /* Cole aqui a URL da implantação do Apps Script (termina em /exec). */
-var SERVER_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT_DA_A1';
+var SERVER_URL = 'https://script.google.com/macros/s/AKfycbxIToNe9zOcXsYlQruGcyoJy0MAcQpq8Oy3n53hwc31jqoU5dIlhPM0X5kE-PwPyzGwdQ/exec';
 
 var PAINEL_KEY = (function(){ try { return new URLSearchParams(location.search).get('painel') || ''; } catch(e){ return ''; } })();
 var LS_PREFIX = 'prova_a1:';
@@ -2429,6 +2429,7 @@ function newer(a,b){
   return String(a.atualizado||'') >= String(b.atualizado||'') ? a : b;
 }
 function serverCall(payload, opts){
+  payload.prova = 'a1'; /* identifica a Prova A1 no roteador do Apps Script */
   return fetch(SERVER_URL, {method:'POST', body:JSON.stringify(payload), keepalive: !!(opts && opts.keepalive)})
     .then(function(r){ return r.json(); })
     .then(function(j){ if (!j || !j.ok) throw {code:(j && j.erro) || 'servidor'}; return j; });
